@@ -6,30 +6,35 @@
 </div>
 </template>
 
-<script lang="ts">
-   import { defineComponent, Ref } from 'vue'
-   import { mapMutations, mapState, mapGetters } from 'vuex'
+<script lang="ts" setup>
+   import { computed } from 'vue'
+   import { useStore } from 'vuex';
+      const store = useStore()
+      const counter = computed(() => store.state.counter)
+      const times2 = computed(() => store.getters.times2)
+      const increment = () => store.commit('setCounter', counter.value + 1) 
 
-   export default defineComponent({
-    name: 'HelloWord',
-    computed: {
-      ...mapState(['counter']),
-      ...mapGetters(['times2'])
-    },
-    methods: {      
-      ...mapMutations(['setCounter']),
-      increment(){
-        this.setCounter(this.counter + 1)
-      }
-    }
 
-   })
 </script>
 
 <style scoped>
 
 </style>
 
+<!-- COMPOSITION API 
+import { useStore } from 'vuex';
+
+export default defineComponent({
+ name: 'HelloWord',
+ setup(){
+   const store = useStore()
+   const counter = computed(() => store.state.counter)
+   const times2 = computed(() => store.getters.times2)
+   const increment = () => store.commit('setCounter', counter.value + 1) 
+   return {increment, counter, times2}
+ }  
+
+}) -->
 
 <!-- OPTION API - 1ERA FORMA
 export default defineComponent({
